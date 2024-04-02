@@ -1,23 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { Movies } from "./Movies";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+
+  const getMovies = async () => {
+    const response = await fetch(
+      `https://yts.mx/api/v2/list_movies.json?minimum_rating=9.0&sort_by=year` //평점을 조절할 수 도 있찌
+    );
+    const json = await response.json();
+
+    setMovies(json.data.movies); //setMovies is modifier of EMPTY array,,, "movies"
+    setLoading(false);
+  };
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  // useEffect(() => {
+  //   fetch(
+  //     `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       setMovies(json.data.movies);
+  //       setLoading(false);
+  //     });
+  // });
+  // old way to call API..... now we use async, await
+  console.log(movies);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          {movies.map((movie) => (
+            <Movies
+              coverImage={movie.medium_cover_image}
+              title={movie.title}
+              summary={movie.summary}
+              genres={movie.genres}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
