@@ -18,17 +18,6 @@ function Home() {
     getMovies();
   }, []);
 
-  // useEffect(() => {
-  //   fetch(
-  //     `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       setMovies(json.data.movies);
-  //       setLoading(false);
-  //     });
-  // });
-  // old way to call API..... now we use async, await
   console.log(movies);
   return (
     <div>
@@ -39,6 +28,7 @@ function Home() {
           {movies.map((movie) => (
             <Movies
               key={movie.id}
+              id={movie.id}
               coverImage={movie.medium_cover_image}
               title={movie.title}
               summary={movie.summary}
@@ -52,3 +42,15 @@ function Home() {
 }
 
 export default Home;
+
+// useEffect(() => {
+//   fetch(
+//     `https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year`
+//   )
+//     .then((response) => response.json())
+//     .then((json) => {
+//       setMovies(json.data.movies);
+//       setLoading(false);
+//     });
+// });
+// old way to call API..... now we use async, await

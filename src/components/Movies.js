@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export const Movies = ({ coverImage, title, summary, genres }) => {
+export const Movies = ({ id, coverImage, title, summary, genres }) => {
+  //props는 object일 뿐이고 우린 그걸 열어서 item을 쓰는 것
   return (
     <div>
       <img src={coverImage} alt="movie_posters" />
       <h2>
-        <Link to="/movie">{title}</Link>
+        <Link to={`/movie/${id}`}>{title}</Link>{" "}
+        {/*jsx구문 중에는 {}을 써서 javascript를 사용할 것**/}
       </h2>
       <p>{summary}</p>
       <ul>
@@ -19,6 +21,7 @@ export const Movies = ({ coverImage, title, summary, genres }) => {
 };
 
 Movies.propTypes = {
+  id: PropTypes.number.isRequired,
   coverImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
